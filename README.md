@@ -95,7 +95,11 @@ npm run test:e2e
 
 `npm run build` 產生 `dist/`，可放在支援 HTTPS 的靜態網站主機。發布順序為 DB → Cron → Edge Function → 前端環境變數／build → 兩裝置 smoke test。
 
-目前沒有連接你的 Supabase 專案，也沒有公開部署網址。因此雲端資源部署、真實 private channel 授權、排程實際執行，以及 iPhone／iPad Safari、Android、Edge 的實機驗收仍須在連接專案後完成。測試通過不代表防作弊；方塊與分數在客戶端運算，結果與榜單僅供休閒使用。
+正式環境已部署：前端位於 [GitHub Pages](https://chunhua1972.github.io/tetris-arena/)，原始碼位於 [GitHub repository](https://github.com/chunhua1972/tetris-arena)；後端使用 Supabase `Games` 專案（`ap-northeast-1`）。兩個資料庫 migration 已套用並記錄，7 張遊戲資料表和兩個 pg_cron 排程已啟用，`tetris-submit-finish` Edge Function 已發布。Auth 已開啟匿名登入並設定正式網站網址。
+
+正式網站已用兩個隔離的 Chrome 瀏覽器工作階段實測：匿名登入、建立私人房間、輸入房間碼加入、雙方準備、開始對局均成功；兩個對戰畫面都正常顯示。桌面／手機模擬與本機故障注入另見上方測試紀錄。iPhone／iPad Safari、Android 實機及 Edge 的跨平台驗收仍待執行。測試通過不代表防作弊；方塊與分數在客戶端運算，結果與榜單僅供休閒使用。
+
+`.env`、`.env.local` 和其他 `.env.*` 設定檔已加入 `.gitignore`；只有不含值的 `.env.example` 範本提交到 GitHub。GitHub Actions 僅設定前端所需的 Supabase URL 與 publishable key；未提交或暴露任何 Secret／`service_role` key。
 
 ## 資料與規則
 
