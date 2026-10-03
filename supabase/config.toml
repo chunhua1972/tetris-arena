@@ -1,0 +1,18 @@
+project_id = "tetris-arena"
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+[db]
+port = 54322
+major_version = 17
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://127.0.0.1:5173"]
+enable_anonymous_sign_ins = true
+[realtime]
+enabled = true
+[functions.tetris-submit-finish]
+verify_jwt = false

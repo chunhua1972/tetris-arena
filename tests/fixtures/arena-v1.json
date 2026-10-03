@@ -1,0 +1,31 @@
+{
+  "rulesVersion": "arena-v1",
+  "seed": "arena-first-replay",
+  "garbageSeed": "arena-first-garbage",
+  "ticks": 360,
+  "actions": [
+    { "tick": 1, "action": { "type": "MOVE", "dx": -1 } },
+    { "tick": 2, "action": { "type": "MOVE", "dx": -1 } },
+    { "tick": 3, "action": { "type": "ROTATE", "direction": 1 } },
+    { "tick": 20, "action": { "type": "HARD_DROP" } },
+    { "tick": 35, "action": { "type": "HOLD" } },
+    { "tick": 40, "action": { "type": "MOVE", "dx": 1 } },
+    { "tick": 50, "action": { "type": "HARD_DROP" } },
+    { "tick": 80, "action": { "type": "MOVE", "dx": 1 } },
+    { "tick": 81, "action": { "type": "MOVE", "dx": 1 } },
+    { "tick": 82, "action": { "type": "MOVE", "dx": 1 } },
+    { "tick": 95, "action": { "type": "HARD_DROP" } },
+    {
+      "tick": 120,
+      "action": {
+        "type": "RECEIVE_GARBAGE",
+        "packet": { "attackId": "fixture-attack", "holes": [2, 2] }
+      }
+    },
+    { "tick": 150, "action": { "type": "MOVE", "dx": -1 } },
+    { "tick": 151, "action": { "type": "MOVE", "dx": -1 } },
+    { "tick": 170, "action": { "type": "HARD_DROP" } },
+    { "tick": 200, "action": { "type": "ROTATE", "direction": -1 } },
+    { "tick": 220, "action": { "type": "HARD_DROP" } }
+  ]
+}
