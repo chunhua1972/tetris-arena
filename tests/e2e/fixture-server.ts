@@ -169,6 +169,14 @@ const server = createServer((req, res) => {
       respond(res, { ok: true });
       return;
     }
+    if (path === "/__test/seed") {
+      const args = await body(req);
+      await db.query("select set_config('tetris.fixture.seed',$1,false)", [
+        String(args.seed),
+      ]);
+      respond(res, { ok: true });
+      return;
+    }
     if (path === "/auth/v1/signup") {
       const id = randomUUID(),
         now = new Date().toISOString(),
@@ -222,14 +230,6 @@ const server = createServer((req, res) => {
           [args.p_mode, args.p_rules_version, args.p_limit, args.p_offset],
         );
         respond(res, result.rows);
-        return;
-      }
-      if (path === "/__test/seed") {
-        const args = await body(req);
-        await db.query("select set_config('tetris.fixture.seed',$1,false)", [
-          String(args.seed),
-        ]);
-        respond(res, { ok: true });
         return;
       }
       if (!user) {

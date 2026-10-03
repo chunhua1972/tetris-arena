@@ -37,9 +37,13 @@ test("duplicate attacks, lost ACKs and a short network outage recover correctly"
     one = await a.newPage(),
     two = await b.newPage();
   try {
-    await request.post("http://127.0.0.1:54329/__test/seed", {
-      data: { seed: "protocol-fixture-0" },
-    });
+    const seedResponse = await request.post(
+      "http://127.0.0.1:54329/__test/seed",
+      {
+        data: { seed: "protocol-fixture-0" },
+      },
+    );
+    expect(seedResponse.ok()).toBe(true);
     await one.goto("/");
     await two.goto("/");
     await one.getByRole("button", { name: "前往對戰大廳" }).click();
@@ -62,6 +66,9 @@ test("duplicate attacks, lost ACKs and a short network outage recover correctly"
     await request.post("http://127.0.0.1:54329/__test/chaos", {
       data: { duplicateAttacks: true, dropNextAck: true },
     });
+    await expect
+      .poll(async () => (await checkpoint(one)).seed)
+      .toBe("protocol-fixture-0");
     await expect.poll(async () => (await checkpoint(one)).lockIndex).toBe(0);
     for (let i = 0; i < 35; i++) {
       const state = await checkpoint(one);
