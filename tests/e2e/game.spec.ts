@@ -46,8 +46,16 @@ test("solo controls, pause, result, restart and saved record", async ({
     fullPage: true,
   });
   for (let i = 0; i < 25; i++) {
-    if (await page.getByRole("dialog").isVisible()) break;
-    await page.getByRole("button", { name: "硬降", exact: true }).click();
+    const dialog = page.getByRole("dialog");
+    if (await dialog.isVisible()) break;
+    try {
+      await page
+        .getByRole("button", { name: "硬降", exact: true })
+        .click({ timeout: 2000 });
+    } catch (error) {
+      if (await dialog.isVisible()) break;
+      throw error;
+    }
   }
   await expect(page.getByRole("dialog")).toBeVisible();
   await expect(page.getByText("成績已保存在這台裝置。")).toBeVisible();

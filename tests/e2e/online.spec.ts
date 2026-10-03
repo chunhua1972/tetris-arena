@@ -52,10 +52,16 @@ test("two authenticated contexts create/join, Ready, finish and rematch", async 
       fullPage: true,
     });
     for (let i = 0; i < 25; i++) {
-      if (await one.getByRole("dialog").isVisible()) break;
-      const drop = one.getByRole("button", { name: "硬降", exact: true });
-      if (await drop.isDisabled()) break;
-      await drop.click();
+      const dialog = one.getByRole("dialog");
+      if (await dialog.isVisible()) break;
+      try {
+        await one
+          .getByRole("button", { name: "硬降", exact: true })
+          .click({ timeout: 2000 });
+      } catch (error) {
+        if (await dialog.isVisible()) break;
+        throw error;
+      }
     }
     await expect(
       one.getByRole("heading", { name: "下一局，再挑戰" }),
